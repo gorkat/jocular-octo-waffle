@@ -35,7 +35,7 @@ class RSS {
     $doc = new DOMDocument;
 
     //Telecharge le fichier XML dans $rss
-    $doc->load($this->URL);
+    $doc->load($this->url);
 
     // Recupère la liste (DOMNodeList) de tous les elements de l'arbre 'title'
     $nodeList = $doc->getElementsByTagName('title');
@@ -47,7 +47,10 @@ class RSS {
     $date = date_default_timezone_set('Europe/Paris');
     $this->date = date("H:i:s d/j/Y");
 
-    $nouvelles = getElementsByTagName('item');
+
+    // Récupère et stocke tout les items dans l'attribut nouvelles.
+    $this->nouvelles = $doc->getElementsByTagName('item');
+
   }
     
 }
