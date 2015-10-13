@@ -1,4 +1,6 @@
-<?php        
+<?php
+require_once('Nouvelles.class.php');
+
 class RSS {
   private $titre; // Titre du flux
   private $url;   // Chemin URL pour télécharger un nouvel état du flux
@@ -6,31 +8,32 @@ class RSS {
   private $nouvelles; // Liste des nouvelles du flux
 
   // Contructeur
-  function __construct($url) {
+  public function __construct($url) {
     $this->url = $url;
+    $this->update();
   }
 
   // Fonctions getter
-  function titre() {
+  public function titre() {
     return $this->titre;
   }
   
-  function url() {
+  public function url() {
     return $this->url;
   }
 
-  function date() {
+  public function date() {
     return $this->date;
   }
 
-  function nouvelles() {
+  public function nouvelles() {
     return $this->nouvelles;
   }
 
 
 
   // Récupère un flux à partir de son URL
-  function update() {
+  public function update() {
     // Cree un objet pour accueillir le contenu du RSS : un document XML
     $doc = new DOMDocument;
 
