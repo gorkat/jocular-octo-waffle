@@ -10,4 +10,5 @@
 
       // Affiche le titre
       echo $rss->titre()."\n";
+      echo "dernière mise à jour le : ".$rss->date()."\n";
 ?>

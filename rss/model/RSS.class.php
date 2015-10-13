@@ -45,7 +45,7 @@ class RSS {
     
     // Mise à jour de la date avec celle de la dernière màj du flux
     $date = date_default_timezone_set('Europe/Paris');
-    $this->date = date("H:i:s d/j/Y");
+    $this->date = date("d/m/Y à H:i:s");
 
 
     // Récupère et stocke tout les items dans l'attribut nouvelles.
