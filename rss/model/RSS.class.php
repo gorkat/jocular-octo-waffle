@@ -8,10 +8,10 @@ class RSS {
   private $nouvelles; // Liste des nouvelles du flux
 
   // Contructeur
-  public function __construct($url) {
+ /* public function __construct($url) {
     $this->url = $url;
     $this->update();
-  }
+  }*/
 
   // Fonctions getter
   public function titre() {

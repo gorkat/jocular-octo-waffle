@@ -1,7 +1,7 @@
 <?php 
 
 require_once('RSS.class.php');
-
+require_once('Nouvelles.class.php');
 class DAO {
   
   private $db; // L'objet de la base de donnée
@@ -47,11 +47,11 @@ class DAO {
       $sql= $this->db->query('SELECT * FROM RSS WHERE URL="'.$url.'"');
       if ($sql != false) {
         $tab = $sql->fetchAll(PDO::FETCH_CLASS, "RSS");
+        return $tab[0];
       } else {
         $tab = NULL;
+        return NULL;
       }
-
-      return $tab[0];
   }
 
 
@@ -76,7 +76,7 @@ class DAO {
 
   // Acces à une nouvelle à partir de son titre et l'ID du flux
   public function readNouvellefromTitre($titre,$RSS_id) {
-    $sql= $this->db->query('SELECT * FROM nouvelle WHERE id="'.$RSS_id.'"');
+    $sql= $this->db->query('SELECT * FROM nouvelle WHERE RSS_id='.$RSS_id.'AND titre ='.$titre);
     if ($sql != false) {
       $tab = $sql->fetchAll(PDO::FETCH_CLASS, "Nouvelles");
     } else {
@@ -88,11 +88,11 @@ class DAO {
 
   // Crée une nouvelle dans la base à partir d'un objet nouvelle
   // et de l'id du flux auquelle elle appartient
-  public function createNouvelle(Nouvelle $n, $RSS_id) {
-    $nouvelle = $this->readNouvellefromTitre($RSS_id);
+  public function createNouvelle(Nouvelles $n, $RSS_id) {
+    $nouvelle = $this->readNouvellefromTitre($n->titre(),$RSS_id);
     if ($nouvelle == NULL) {
       try {
-        $q = "INSERT INTO nouvelle (id) VALUES ('$RSS_id')";
+        $q = 'INSERT INTO nouvelle (titre, description, url, image, RSS_id) VALUES ('.$n->titre().','.$n->description().','.$n->lien().','.$n->image().",$RSS_id)";
         $r = $this->db->exec($q);
         if ($r == 0) {
           die("createNouvelle error: no nouvelle inserted\n");
@@ -108,7 +108,7 @@ class DAO {
   }
 
   // Met à jour le champ image de la nouvelle dans la base
-  public function updateImageNouvelle(Nouvelle $n) {
+  public function updateImageNouvelle(Nouvelles $n) {
     // Met à jour uniquement le titre et la date
     $titre = $this->db->quote($nouvelle->titre());
     $q = "UPDATE nouvelle SET titre=$titre, date='".$nouvelle->date()."' WHERE url='".$nouvelle->url()."'";
@@ -129,5 +129,31 @@ class DAO {
 //  $r->update();
 //  $rss->updateRSS($r);
 //  var_dump($r);
+
+// Test de la classe DAO
+//        require_once('DAO.class.php');
+
+        // Test si l'URL existe dans la BD
+        $url = 'http://www.lemonde.fr/m-actu/rss_full.xml';
+        $dao = new DAO;
+        $rss = $dao->readRSSfromURL($url);
+        if ($rss == NULL) {
+          echo $url." n'est pas connu\n";
+          echo "On l'ajoute ... \n";
+          $rss = $dao->createRSS($url);
+
+        }
+
+        // Mise à jour du flux
+        $rss->update();
+        $dao->updateRSS($rss);
+
+        foreach ($rss->nouvelles() as $key) {
+          $nvl = new Nouvelles;
+          $nvl->update($key);
+          var_dump($nvl);
+          $dao->createNouvelle($nvl,1);
+        }
+
 
 ?>
