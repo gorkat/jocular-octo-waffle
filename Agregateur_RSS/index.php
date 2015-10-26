@@ -11,8 +11,9 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        require_once('./RSS.class.php');
-        require_once('./Nouvelles.class.php');
+        require_once('./Model/RSS.class.php');
+        require_once('./Model/Nouvelles.class.php');
+        require_once('./Model/DAO.class.php');
         // Mise à jour du flux
         $rss->update();
         $dao->updateRSS($rss);

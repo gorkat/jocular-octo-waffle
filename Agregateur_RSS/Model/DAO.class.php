@@ -11,8 +11,8 @@
  *
  * @author gorkat
  */
-require_once('./RSS.class.php');
-require_once('./Nouvelles.class.php');
+require_once('RSS.class.php');
+require_once('Nouvelles.class.php');
 
 class DAO {
   
@@ -20,7 +20,7 @@ class DAO {
 
   // Ouverture de la base de donnée
   public function __construct() {
-    $dsn = 'sqlite:./bdd/rss.db'; // Data source name
+    $dsn = 'sqlite:/opt/lampp/htdocs/jocular-octo-waffle/Agregateur_RSS/Model/bdd/rss.db'; // Data source name
     try {
       $this->db = new PDO($dsn);
     } catch (PDOException $e) {
