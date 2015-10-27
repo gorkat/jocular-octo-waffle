@@ -86,10 +86,12 @@ class DAO {
 
   // Acces à une nouvelle à partir de son titre et l'ID du flux
   public function readNouvellefromTitre($titre,$RSS_id) {
-    $sql= $this->db->query('SELECT * FROM nouvelle WHERE RSS_id='.$RSS_id.'AND titre ='.$titre);
+    $title = $this->db->quote($titre);
+    $id = $this->db->quote($RSS_id);
+    $sql= $this->db->query('SELECT * FROM Nouvelles WHERE RSS_id='.$id.'AND titre ='.$title);
     $tab = $sql->fetchAll(PDO::FETCH_CLASS, "Nouvelles");
     if ($tab != NULL) {
-      return tab[0];
+      return $tab[0];
     } else {
       return NULL;
     }
@@ -101,26 +103,30 @@ class DAO {
     $nouvelle = $this->readNouvellefromTitre($n->titre(),$RSS_id);
     if ($nouvelle == NULL) {
       try {
-        $q = 'INSERT INTO nouvelle (titre, description, url, image, RSS_id) VALUES ('.$n->titre().','.$n->description().','.$n->lien().','.$n->image().",$RSS_id)";
-        $r = $this->db->exec($q);
-        if ($r == 0) {
-          die("createNouvelle error: no nouvelle inserted\n");
-        }
-        return $this->readNouvellefromTitre($RSS_id);
+        $titre = $this->db->quote($n->titre());
+        $desc = $this->db->quote($n->description());
+        $lien = $this->db->quote($n->lien());
+        $image = $this->db->quote($n->image());
+        $RSS_id = $this->db->quote($RSS_id);
+        
+        $q = "INSERT INTO Nouvelles (titre, description, url, image, RSS_id) VALUES ($titre,$desc,$lien,$image,$RSS_id)";
+        $this->db->exec($q) or die("createNouvelle error: no nouvelle inserted\n");
+        
+        return $this->readNouvellefromTitre($n->titre(),$RSS_id);
       } catch (PDOException $e) {
         die("PDO Error :".$e->getMessage());
       }
     } else {
       // Retourne l'objet existant
-      return $rss;
+      return $nouvelle;
     }
   }
 
   // Met à jour le champ image de la nouvelle dans la base
   public function updateImageNouvelle(Nouvelles $n) {
     // Met à jour uniquement le titre et la date
-    $titre = $this->db->quote($nouvelle->titre());
-    $q = "UPDATE nouvelle SET titre=$titre, date='".$nouvelle->date()."' WHERE url='".$nouvelle->url()."'";
+    $titre = $this->db->quote($n->titre());
+    $q = "UPDATE Nouvelles SET titre=$titre, date='".$n->pubDate()."' WHERE url='".$n->lien()."'";
     try {
       $r = $this->db->exec($q);
       if ($r == 0) {

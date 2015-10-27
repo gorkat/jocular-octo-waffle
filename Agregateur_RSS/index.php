@@ -31,18 +31,36 @@ and open the template in the editor.
           echo "On l'ajoute ... \n";
           $rss = $dao->createRSS($url);
         } else {
-            echo "rss est déjà connu par la bdd";
+            echo "rss est déjà connu par la bdd  |  ";
         }
-//        // Mise à jour du flux
-//        var_dump($rss);
+        
+        
+        
+        
+        
+        // Mise à jour du flux
         $rss->update();
-//        print_r($rss);
         $dao->updateRSS($rss);
+//        $i =0;
         foreach ($rss->nouvelles() as $key) {
-          $nvl = new Nouvelles;
-          $nvl->update($key);
-          $dao->createNouvelle($nvl,1);
+//          if ($i < 1) {
+                $nvl = new Nouvelles;
+                $nvl->update($key);
+                $o = $dao->readNouvellefromTitre($nvl->titre(), $rss->id());
+                
+                if ($o == NULL) {
+                        echo $nvl->titre()." n'est pas connu\n";
+                        echo "On l'ajoute ... \n";
+                        $o = $dao->createNouvelle($nvl, $rss->id());
+                } else {
+                        echo "\n La nouvelle est déjà connu par la bdd";
+                }
+                $dao->updateImageNouvelle($nvl);
+//          $i++;
+//          }
         }
+          
+//          $dao->createNouvelle($nvl,1);
         ?>
     </body>
 </html>

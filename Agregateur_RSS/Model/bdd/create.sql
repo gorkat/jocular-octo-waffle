@@ -5,7 +5,7 @@
         date timestamp
       );
 
-      CREATE TABLE nouvelle (
+      CREATE TABLE Nouvelles (
         id integer primary key autoincrement,
         date datetime,
         titre varchar(255),

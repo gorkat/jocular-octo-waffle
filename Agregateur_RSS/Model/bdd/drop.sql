@@ -1,4 +1,4 @@
 DROP table RSS;
-DROP table nouvelle;
+DROP table Nouvelles;
 DROP table utilisateur;
 DROP table abonnement;

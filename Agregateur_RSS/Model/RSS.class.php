@@ -16,7 +16,7 @@ class RSS {
   private $url;   // Chemin URL pour télécharger un nouvel état du flux
   private $date;  // Date du dernier téléchargement du flux
   private $nouvelles; // Liste des nouvelles du flux
-
+  private $id;
   // Contructeur
  /* public function __construct($url) {
     $this->url = $url;
@@ -40,7 +40,9 @@ class RSS {
     return $this->nouvelles;
   }
 
-
+  public function id() {
+      return $this->id;
+  }
 
   // Récupère un flux à partir de son URL
   public function update() {
