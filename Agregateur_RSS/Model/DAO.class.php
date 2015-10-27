@@ -39,11 +39,11 @@ class DAO {
     $rss = $this->readRSSfromURL($url);
     if ($rss == NULL) {
       try {
+//        $url = $this->db->quote($url);
         $q = "INSERT INTO RSS (url) VALUES ('$url')";
-        $r = $this->db->exec($q);
-        if ($r == 0) {
-          die("createRSS error: no rss inserted\n");
-        }
+
+        $this->db->exec($q) or die("\ncreateRSS error: no rss inserted\n"); // stop l'éxécution si aucune ligne insérée (si exec == bool(false) ou exec == 0)
+
         return $this->readRSSfromURL($url);
       } catch (PDOException $e) {
         die("PDO Error :".$e->getMessage());
@@ -57,11 +57,10 @@ class DAO {
   // Acces à un objet RSS à partir de son URL
   public function readRSSfromURL($url) {
       $sql= $this->db->query('SELECT * FROM RSS WHERE URL="'.$url.'"');
-      if ($sql != false) {
-        $tab = $sql->fetchAll(PDO::FETCH_CLASS, "RSS");
+      $tab = $sql->fetchAll(PDO::FETCH_CLASS, "RSS");
+      if($tab != NULL) {
         return $tab[0];
       } else {
-        $tab = NULL;
         return NULL;
       }
   }
@@ -71,12 +70,11 @@ class DAO {
   public function updateRSS(RSS $rss) {
   // Met à jour uniquement le titre et la date
     $titre = $this->db->quote($rss->titre());
-    $q = "UPDATE RSS SET titre=$titre, date='".$rss->date()."' WHERE url='".$rss->url()."'";
+    $date = $this->db->quote($rss->date());
+    $url = $this->db->quote($rss->url());
+    $q = 'UPDATE RSS SET titre='.$titre.', date='.$date.' WHERE url='.$url;
     try {
-      $r = $this->db->exec($q);
-      if ($r == 0) {
-        die("updateRSS error: no rss updated\n");
-      }
+      $this->db->exec($q) or die("\nupdateRSS error: no rss updated\n");
     } catch (PDOException $e) {
       die("PDO Error :".$e->getMessage());
     }
@@ -89,13 +87,12 @@ class DAO {
   // Acces à une nouvelle à partir de son titre et l'ID du flux
   public function readNouvellefromTitre($titre,$RSS_id) {
     $sql= $this->db->query('SELECT * FROM nouvelle WHERE RSS_id='.$RSS_id.'AND titre ='.$titre);
-    if ($sql != false) {
-      $tab = $sql->fetchAll(PDO::FETCH_CLASS, "Nouvelles");
+    $tab = $sql->fetchAll(PDO::FETCH_CLASS, "Nouvelles");
+    if ($tab != NULL) {
+      return tab[0];
     } else {
-      $tab = NULL;
+      return NULL;
     }
-
-    return $tab[0];
   }
 
   // Crée une nouvelle dans la base à partir d'un objet nouvelle
@@ -135,23 +132,3 @@ class DAO {
   }
 
 }
-
-//  $rss = new DAO();
-//  $r = $rss->createRSS('http://www.lemonde.fr/m-actu/rss_full.xml');
-//  $r->update();
-//  $rss->updateRSS($r);
-//  var_dump($r);
-
-// Test de la classe DAO
-//        require_once('DAO.class.php');
-
-        // Test si l'URL existe dans la BD
-        $url = 'http://www.lemonde.fr/m-actu/rss_full.xml';
-        $dao = new DAO;
-        $rss = $dao->readRSSfromURL($url);
-        if ($rss == NULL) {
-          echo $url." n'est pas connu\n";
-          echo "On l'ajoute ... \n";
-          $rss = $dao->createRSS($url);
-
-        }

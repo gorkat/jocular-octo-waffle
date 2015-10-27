@@ -57,7 +57,7 @@ class RSS {
     $this->titre = $nodeList->item(0)->textContent;
     
     // Mise à jour de la date avec celle de la dernière màj du flux
-    $date = date_default_timezone_set('Europe/Paris');
+    date_default_timezone_set('Europe/Paris');
     $this->date = date("d/m/Y à H:i:s");
 
 

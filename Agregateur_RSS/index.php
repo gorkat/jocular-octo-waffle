@@ -14,14 +14,33 @@ and open the template in the editor.
         require_once('./Model/RSS.class.php');
         require_once('./Model/Nouvelles.class.php');
         require_once('./Model/DAO.class.php');
-        // Mise à jour du flux
-        $rss->update();
-        $dao->updateRSS($rss);
 
+
+        // Test de la classe DAO
+
+
+        // Test si l'URL existe dans la BD
+        $url = 'http://www.lemonde.fr/m-actu/rss_full.xml';
+        $dao = new DAO;
+        $rss = $dao->readRSSfromURL($url);
+//        print_r($rss);
+//        var_dump($rss);
+
+        if ($rss == NULL) {
+          echo $url." n'est pas connu\n";
+          echo "On l'ajoute ... \n";
+          $rss = $dao->createRSS($url);
+        } else {
+            echo "rss est déjà connu par la bdd";
+        }
+//        // Mise à jour du flux
+//        var_dump($rss);
+        $rss->update();
+//        print_r($rss);
+        $dao->updateRSS($rss);
         foreach ($rss->nouvelles() as $key) {
           $nvl = new Nouvelles;
           $nvl->update($key);
-          var_dump($nvl);
           $dao->createNouvelle($nvl,1);
         }
         ?>
