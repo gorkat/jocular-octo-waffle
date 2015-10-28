@@ -1,0 +1,99 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28 oct. 2015, 12:00:11
+    Author     : rebirthxiii
+*/
+
+body {
+    width : 1000px;
+    margin : auto;
+    background-color: coral;
+}
+
+header img {
+    width : 30px; height : 30px;
+    display : inline-block;
+    position : relative;
+}
+
+div > h3 {
+    display : inline-block;
+}
+
+/*-------------------- Mise en forme du menu ----------------------------------*/
+
+nav {
+    width : 1000px; height : 90px;
+    background-color: black;
+    top : 70px;
+}
+
+nav ul li {
+    display : inline-block;
+    position : relative;
+    top : 35px;
+}
+
+li a {
+    padding : 20px;
+    text-decoration: none;
+    border : 1px solid black;
+    background-color: buttonface;
+    color : blue;
+}
+
+ul {
+    padding-left : 0px;
+    text-align: center;
+}
+
+ul li:first-child a {
+    border-top-left-radius : 40px;
+    border-bottom-left-radius: 40px;
+}
+
+ul li:last-child a {
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+
+
+li a:hover {
+    background-color: orange;
+    color : white;
+}
+
+li a:visited {
+    color : blue;
+}
+
+/*------------ Mise en forme des articles -----------------------------------*/
+
+section {
+    background-color: brown;
+    padding-left: 50px;
+}
+
+article img {
+    width : 30%; height : 30%;
+    float : left;
+    margin-right: 30px;
+}
+
+article p {
+    padding : 5px;
+}
+
+article a {
+    display : block;
+    text-decoration: none;
+    color : blue;
+}
+
+article a:visited {
+    color : blue;
+}

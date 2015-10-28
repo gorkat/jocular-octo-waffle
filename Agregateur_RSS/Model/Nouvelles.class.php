@@ -12,17 +12,17 @@
  * @author gorkat
  */
 class Nouvelles {
-    private $lien;
+    private $url;
     private $titre;
     private $description;
-    private $pubDate;
+    private $date;
     private $id;
     private $image;
 
-    public function lien() { return $this->lien;}
+    public function lien() { return $this->url;}
     public function titre() { return $this->titre;}
     public function description() { return $this->description;}
-    public function pubDate() { return $this->pubDate;}
+    public function date() { return $this->date;}
     public function id() { return $this->id;}
     public function image() { return $this->image;}
 
@@ -43,7 +43,7 @@ class Nouvelles {
 
             //màj date
             $nodeList = $item->getElementsByTagName('pubDate');
-            $this->pubDate = $nodeList->item(0)->textContent;
+            $this->date = $nodeList->item(0)->textContent;
 
             //màj id item
             $nodeList = $item->getElementsByTagName('guid');

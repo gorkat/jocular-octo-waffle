@@ -26,9 +26,11 @@ class DAO {
     } catch (PDOException $e) {
       exit("Erreur ouverture BD : ".$e->getMessage());
     }
+    
+    
   }
 
-
+  public function db() { return $this->db; }
   //////////////////////////////////////////////////////////
   // Methodes CRUD sur RSS
   //////////////////////////////////////////////////////////
@@ -84,6 +86,14 @@ class DAO {
   // Methodes CRUD sur Nouvelle
   //////////////////////////////////////////////////////////
 
+  public function returnNouvellesFromRSS($RSS_id) {
+      $id = $this->db->quote($RSS_id);
+      $sql = $this->db->query('Select * from Nouvelles WHERE RSS_id='.$id);
+      $tab = $sql->fetchAll(PDO::FETCH_CLASS, "Nouvelles");
+      
+      return $tab;
+  }
+  
   // Acces à une nouvelle à partir de son titre et l'ID du flux
   public function readNouvellefromTitre($titre,$RSS_id) {
     $title = $this->db->quote($titre);
