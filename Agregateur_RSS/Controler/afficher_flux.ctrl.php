@@ -16,22 +16,20 @@
     // Mise à jour du flux
     
     $nvls = $dao->returnNouvellesFromRSS($rss->id());
-    $i = 0;
-    
+
+    include("../Views/flux.php");
     
     foreach($nvls as $key) {
-        
-        if($i < 1) {
-            $data['titre'] = $key->titre();
-            $data['desc'] = $key->description();
-            $data['lien'] = $key->lien();
-            $data['img'] = '.'.$key->image();
-            $data['date'] = $key->date();
-        }
-        $i++;
+        echo "<hr>";
+        echo "<article>";
+            echo "<h1>".$key->titre()."<h1>";
+                    echo '<img src="'.'.'.$key->image().'">';
+                    echo '<p>'.$key->description().'</p>';
+                    echo '<p>'.$key->date().'</p>';
+                    echo '<a href="'.$key->lien().'">Lire plus sur le site ></a>';
+                    echo '<hr>';
+        echo '</article>';
     }
-
-include("../Views/flux.php");
 
 
     

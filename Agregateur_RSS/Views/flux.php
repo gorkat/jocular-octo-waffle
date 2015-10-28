@@ -13,7 +13,7 @@ and open the template in the editor.
     <body>
         <?php include("menu.php"); //Inclusion d'un morceau de page contenant le menu pour une plus grande facilité de modification de celui ci.?> 
         <section>
-            <hr>
+<!--            <hr>
             <article>
                 <h1><?= $data['titre'] ?><h1>
                         <img src="<?= $data['img']?>">
@@ -21,9 +21,9 @@ and open the template in the editor.
                         <p><?= $data['date'] ?>
                         <a href="<?= $data['lien']?>">Lire plus sur le site ></a>
                         <hr>
-            </article>
+            </article>-->
         <?php
-
+            
         ?>
         </section>
     </body>
