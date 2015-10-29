@@ -82,6 +82,14 @@ class DAO {
     }
   }
 
+  public function readAllRSS() {
+      $q = ("Select * from RSS");
+      $sql = $this->db->query($q);
+      $tab = $sql->fetchAll(PDO::FETCH_CLASS, "RSS");
+      
+      return $tab;
+  }
+  
   //////////////////////////////////////////////////////////
   // Methodes CRUD sur Nouvelle
   //////////////////////////////////////////////////////////
@@ -136,7 +144,7 @@ class DAO {
   public function updateImageNouvelle(Nouvelles $n) {
     // Met à jour uniquement le titre et la date
     $titre = $this->db->quote($n->titre());
-    $q = "UPDATE Nouvelles SET titre=$titre, date='".$n->pubDate()."' WHERE url='".$n->lien()."'";
+    $q = "UPDATE Nouvelles SET titre=$titre, date='".$n->date()."' WHERE url='".$n->lien()."'";
     try {
       $r = $this->db->exec($q);
       if ($r == 0) {
@@ -147,4 +155,58 @@ class DAO {
     }
   }
 
+  //////////////////////////////////////////////////////////
+  // Methodes CRUD sur Utilisateurs
+  //////////////////////////////////////////////////////////
+  
+  
+  public function readUserfromLoginAndPassWord($login, $password) {
+      //Vérifie si le mot de passe et le login correspondent à un tuple dans la base de données
+      // Renvoie Vrai si oui
+      // Renvoie Faux sinon
+      $user = $this->db->quote($login);
+      $mp = $this->db->quote($password);
+      $q = ("Select login, mp FROM utilisateur WHERE login =$user and mp=$mp");
+      
+      $sql = $this->db->query($q);
+      $res = $sql->fetchAll();
+      if($res == NULL) {
+          return false;
+      } else {
+          return true;
+      }
+  }
+  
+  public function createNewUser($login, $password) {
+      $loginIsAlreadyTaken = $this->readUserfromLogin($login);
+      
+      if(!$loginIsAlreadyTaken) {
+
+            $user = $this->db->quote($login);
+            $mp = $this->db->quote($password);
+            $q = ("Insert into utilisateur(login,mp) values ($user,$mp)");
+
+            try {
+              $this->db->exec($q) or die("\ncreateNewUser error: no user inserted\n");
+            } catch (PDOException $e) {
+                die("PDO Error :".$e->getMessage());
+            }
+            return true;
+      } else { 
+            return false;
+      }
+  }
+  
+  public function readUserfromLogin($login) {
+      $user = $this->db->quote($login);
+      $q = ("Select * FROM utilisateur WHERE login=$user");
+      $sql = $this->db->query($q);
+      $res = $sql->fetchall();
+      
+      if($res == NULL) {        // le login n'est pas déjà attribué
+          return false;
+      } else {
+          return true;
+      }
+  }
 }

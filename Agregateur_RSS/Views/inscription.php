@@ -7,24 +7,24 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Acceuil</title>
         <link rel="stylesheet" type="text/css" href="../Views/Styles/style.css" />
+        <title></title>
     </head>
     <body>
+                
         <?php include("menu_user_not_logged.php"); //Inclusion d'un morceau de page contenant le menu pour une plus grande facilité de modification de celui ci.?> 
         <section>
-            <p>Vous êtes sur la page d'Acceuil de l'agregateur RSS de Nous ;) </p>
-            <p>Veuillez vous logger pour consulter vos flux, ou le cas échéant vous inscrire ;)</p>
-            
-            <form action="../Controler/logging.ctrl.php">
+        <form action="../Controler/inscription.ctrl.php">
                 <p>Nom d'utilisateur :
                 <input type="text" name="login"/>
                 </p>
-                <p>Mot de Passe :
-                    <input type="password" name="password"/>
+                <p>Mot de passe :
+                    <input type="password" name="password1" />
                 </p>
-                <input type="submit" value="Se connecter">
-  </form>
+                <p>Confirmez le mot de passe :
+                    <input type="password" name="password2" />
+                </p>
+                <input type="submit" value="S'inscrire">
         </section>
     </body>
 </html>

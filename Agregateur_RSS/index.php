@@ -8,4 +8,4 @@
 
 /* Point de démarrage de l'appplication AgregateurRSS */
 
-header('Location: ./Controler/afficher_flux.ctrl.php');
+header('Location: ./Views/Acceuil.php');

@@ -7,17 +7,12 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Vos Flux</title>
+        <title>Acceuil</title>
         <link rel="stylesheet" type="text/css" href="../Views/Styles/style.css">
     </head>
     <body>
-        <?php include("menu.php")?>
+        <?php include("menu.php"); //Inclusion d'un morceau de page contenant le menu pour une plus grande facilité de modification de celui ci.?> 
         <section>
-            <?php
-                foreach($data as $key){
-                    echo '<a href ="afficher_nouvelles.ctrl.php?flux='.$key.'">'.$key."</p>";
-                }
-            ?>
-        </section>
+            
     </body>
 </html>

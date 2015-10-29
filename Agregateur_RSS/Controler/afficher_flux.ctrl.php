@@ -9,27 +9,16 @@
     require_once('../Model/RSS.class.php');
     require_once('../Model/Nouvelles.class.php');
     require_once('../Model/DAO.class.php');
-
-    $url = 'http://www.lemonde.fr/m-actu/rss_full.xml';
+    
     $dao = new DAO;
-    $rss = $dao->readRSSfromURL($url);
-    // Mise à jour du flux
     
-    $nvls = $dao->returnNouvellesFromRSS($rss->id());
-
-    include("../Views/flux.php");
+    $tab = $dao->readAllRSS(); // on récupère tous les flux de la base
     
-    foreach($nvls as $key) {
-        echo "<hr>";
-        echo "<article>";
-            echo "<h1>".$key->titre()."<h1>";
-                    echo '<img src="'.'.'.$key->image().'">';
-                    echo '<p>'.$key->description().'</p>';
-                    echo '<p>'.$key->date().'</p>';
-                    echo '<a href="'.$key->lien().'">Lire plus sur le site ></a>';
-                    echo '<hr>';
-        echo '</article>';
+    
+    $i = 0;
+    foreach($tab as $key){
+        $data[$i] = $key->url();
+        $i++;
     }
-
-
     
+    include("../Views/flux.php");

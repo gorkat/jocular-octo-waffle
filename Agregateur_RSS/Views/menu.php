@@ -6,8 +6,8 @@
 
         <nav id="menu"> 
                 <ul>
-                    <li><a href="Acceuil.php">Acceuil</a></li><!--
-                    --><li><a href="flux.php">Mes Flux</a></li><!--
+                    <li><a href="../Views/Acceuil.php">Acceuil</a></li><!--
+                    --><li><a href="../Controler/afficher_flux.ctrl.php">Mes Flux</a></li><!--
                     --><li><a href="#">Supprimer des Flux</a></li>
                 </ul>
         </nav>
