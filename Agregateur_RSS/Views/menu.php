@@ -6,9 +6,9 @@
 
         <nav id="menu"> 
                 <ul>
-                    <li><a href="../Views/Acceuil.php">Acceuil</a></li><!--
+                    <li><a href="../Controler/acceuil.ctrl.php">Acceuil</a></li><!--
                     --><li><a href="../Controler/afficher_flux.ctrl.php">Mes Flux</a></li><!--
-                    --><li><a href="#">Supprimer des Flux</a></li>
+                    --><li><a href="../Controler/logging.ctrl.php">Déconnexion</a></li>
                 </ul>
         </nav>
 </header>

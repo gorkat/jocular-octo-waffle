@@ -11,19 +11,19 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="../Views/Styles/style.css" />
     </head>
     <body>
-        <?php include("menu_user_not_logged.php"); //Inclusion d'un morceau de page contenant le menu pour une plus grande facilité de modification de celui ci.?> 
+        <?php include("menu_login.php"); //Inclusion d'un morceau de page contenant le menu pour une plus grande facilité de modification de celui ci.?> 
         <section>
             <p>Vous êtes sur la page d'Acceuil de l'agregateur RSS de Nous ;) </p>
             <p>Veuillez vous logger pour consulter vos flux, ou le cas échéant vous inscrire ;)</p>
             
             <form action="../Controler/logging.ctrl.php">
                 <p>Nom d'utilisateur :
-                <input type="text" name="login"/>
+                    <input type="text" name="login"/>
                 </p>
                 <p>Mot de Passe :
                     <input type="password" name="password"/>
                 </p>
-                <input type="submit" value="Se connecter">
+                    <input type="submit" value="Se connecter">
   </form>
         </section>
     </body>

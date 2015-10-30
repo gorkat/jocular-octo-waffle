@@ -12,7 +12,7 @@ and open the template in the editor.
     </head>
     <body>
                 
-        <?php include("menu_user_not_logged.php"); //Inclusion d'un morceau de page contenant le menu pour une plus grande facilité de modification de celui ci.?> 
+        <?php include("menu_login.php"); //Inclusion d'un morceau de page contenant le menu pour une plus grande facilité de modification de celui ci.?> 
         <section>
         <form action="../Controler/inscription.ctrl.php">
                 <p>Nom d'utilisateur :
