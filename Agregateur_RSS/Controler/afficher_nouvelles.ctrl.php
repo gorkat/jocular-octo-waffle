@@ -14,6 +14,20 @@
     $dao = new DAO;
     $rss = $dao->readRSSfromURL($url);
     // Mise à jour du flux
+    $rss->update();
+    $dao->updateRSS($rss);
+    
+    foreach ($rss->nouvelles() as $key) {
+            $nvl = new Nouvelles;
+            $nvl->update($key);
+            $o = $dao->readNouvellefromTitre($nvl->titre(), $rss->id());
+
+            if ($o == NULL) {
+                    $o = $dao->createNouvelle($nvl, $rss->id());
+            } else {
+            }
+            $dao->updateImageNouvelle($nvl);
+    }    
     
     $nvls = $dao->returnNouvellesFromRSS($rss->id());
 
@@ -22,10 +36,10 @@
     foreach($nvls as $key) {
         echo "<article>";
             echo "<h1>".$key->titre()."<h1>";
-                    echo '<img src="'.'.'.$key->image().'">';
+                    echo '<img src="'.$key->image().'">';
                     echo '<p>'.$key->description().'</p>';
                     echo '<p>'.$key->date().'</p>';
-                    echo '<a href="'.$key->lien().'">Lire plus sur le site ></a>';
+                    echo '<a href="'.$key->url().'">Lire plus sur le site ></a>';
                     echo '<hr>';
         echo '</article>';
     }

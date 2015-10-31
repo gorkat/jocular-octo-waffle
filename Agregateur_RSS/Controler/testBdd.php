@@ -11,17 +11,18 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        require_once('./Model/RSS.class.php');
-        require_once('./Model/Nouvelles.class.php');
-        require_once('./Model/DAO.class.php');
-
+        require_once('../Model/RSS.class.php');
+        require_once('../Model/Nouvelles.class.php');
+        require_once('../Model/DAO.class.php');
+        $dao = new DAO;
 
         // Test de la classe DAO
+$urls = $dao->readAllRSS();
 
-
+foreach($urls as $key){
         // Test si l'URL existe dans la BD
-        $url = 'http://www.lemonde.fr/m-actu/rss_full.xml';
-        $dao = new DAO;
+
+        $url = $key['url'];
         $rss = $dao->readRSSfromURL($url);
 
         if ($rss == NULL) {
@@ -53,7 +54,7 @@ and open the template in the editor.
                 }
                 $dao->updateImageNouvelle($nvl);
         }
-          
+}
         ?>
     </body>
 </html>

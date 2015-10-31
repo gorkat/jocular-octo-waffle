@@ -67,7 +67,15 @@ class DAO {
       }
   }
 
-
+public function readRSSfromID($id) {
+    $sql= $this->db->query('SELECT url FROM RSS WHERE RSS_id="'.$id.'"');
+    $tab = $sql->fetchAll(PDO::FETCH_ASSOC);
+    if($tab != NULL) {
+      return $tab[0];
+    } else {
+      return NULL;
+    }
+  }
   // Met à jour un flux
   public function updateRSS(RSS $rss) {
   // Met à jour uniquement le titre et la date
@@ -83,9 +91,9 @@ class DAO {
   }
 
   public function readAllRSS() {
-      $q = ("Select * from RSS");
+      $q = ("Select url from RSS");
       $sql = $this->db->query($q);
-      $tab = $sql->fetchAll(PDO::FETCH_CLASS, "RSS");
+      $tab = $sql->fetchAll(PDO::FETCH_ASSOC);
       
       return $tab;
   }
@@ -123,7 +131,7 @@ class DAO {
       try {
         $titre = $this->db->quote($n->titre());
         $desc = $this->db->quote($n->description());
-        $lien = $this->db->quote($n->lien());
+        $lien = $this->db->quote($n->url());
         $image = $this->db->quote($n->image());
         $RSS_id = $this->db->quote($RSS_id);
         
@@ -144,7 +152,7 @@ class DAO {
   public function updateImageNouvelle(Nouvelles $n) {
     // Met à jour uniquement le titre et la date
     $titre = $this->db->quote($n->titre());
-    $q = "UPDATE Nouvelles SET titre=$titre, date='".$n->date()."' WHERE url='".$n->lien()."'";
+    $q = "UPDATE Nouvelles SET titre=$titre, date='".$n->date()."' WHERE url='".$n->url()."'";
     try {
       $r = $this->db->exec($q);
       if ($r == 0) {
@@ -177,14 +185,15 @@ class DAO {
       }
   }
   
-  public function createNewUser($login, $password) {
+  public function createNewUser($login, $password, $mail) {
       $loginIsAlreadyTaken = $this->readUserfromLogin($login);
       
-      if(!$loginIsAlreadyTaken) {
+      if($loginIsAlreadyTaken == NULL) {
 
             $user = $this->db->quote($login);
             $mp = $this->db->quote($password);
-            $q = ("Insert into utilisateur(login,mp) values ($user,$mp)");
+            $email = $this->db->quote($mail);
+            $q = ("Insert into utilisateur(login,mp,mail) values ($user,$mp,$email)");
 
             try {
               $this->db->exec($q) or die("\ncreateNewUser error: no user inserted\n");
@@ -201,12 +210,98 @@ class DAO {
       $user = $this->db->quote($login);
       $q = ("Select * FROM utilisateur WHERE login=$user");
       $sql = $this->db->query($q);
-      $res = $sql->fetchall();
+      $res = $sql->fetchall(PDO::FETCH_ASSOC);
       
       if($res == NULL) {        // le login n'est pas déjà attribué
+          return null;
+      } else {
+          return $res[0];
+      }
+  }
+  
+  public function readMailfromUser($user){
+      $login = $this->db->quote($user);
+      $sql = $this->db->query("SELECT mail FROM utilisateur WHERE login=$login");
+      $res = $sql->fetchAll();
+      
+      return $res;
+  }
+  
+  public function retriveAllUsers(){
+      $sql = $this->db->query('SELECT * FROM utilisateur');
+      $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+      
+      return $res;
+  }
+  
+  public function updateMPfromUser($user, $newMP){
+      $login = $this->db->quote($user);
+      $mp = $this->db->quote($newMP);
+      $q = "UPDATE utilisateur SET mp=$mp WHERE login=$login";
+      
+        try {
+          $this->db->exec($q) or die("\nupdateMPfromUser error: no password updated\n");
+        } catch (PDOException $e) {
+            die("PDO Error :".$e->getMessage());
+        }
+  }
+  
+  public function removeFromUser($user) {
+      // A compléter par les suppressions des infos concernant l'utilisateur
+      $login = $this->db->quote($user);
+      $q = "DELETE FROM utilisateur WHERE login=$login";
+      
+        try {
+          $this->db->exec($q) or die("\nremoveFromUser error: no user Removed\n");
+        } catch (PDOException $e) {
+            die("PDO Error :".$e->getMessage());
+        }
+  }
+  
+  
+////////////////////////////////////////////////////////////////////////////////
+//  Méthodes CRUD sur Abonnements
+////////////////////////////////////////////////////////////////////////////////
+  
+  public function readAbofromUser($user) {
+      $login = $this->db->quote($user);
+      
+      $sql = $this->db->query("SELECT * FROM abonnement WHERE utilisateur_login=$login");
+      $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+      
+      return $res;
+  }
+  
+  public function readAbofromUserANDrss($user,$rss){
+      $login = $this->db->quote($user);
+      $rss = $this->db->quote($RSS_id);
+      $sql = $this->db->query("SELECT * FROM abonnement WHERE utilisateur_login=$login and RSS_id=$rss");
+      
+      $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+      
+      if($res == NULL){
           return false;
       } else {
           return true;
       }
   }
+  
+  public function createAbofromUser($user, $RSS_id, $nom, $catégorie) {
+      $login = $this->db->quote($user);
+      $rss = $this->db->quote($RSS_id);
+      $name = $this->db->quote($nom);
+      $cat = $this->db->quote($catégorie);
+      
+      if (!$this->readAbofromUserANDrss($user, $RSS_id)){
+      
+      $q = "INSERT into abonnement(utilisateur_login,RSS_id,nom,categorie) VALUES ($login,$rss,$name,$cat)";
+        try {
+          $this->db->exec($q) or die("\nCreateAbofomUser error: no Abonnement Inserted\n");
+        } catch (PDOException $e) {
+            die("PDO Error :".$e->getMessage());
+        }
+      }
+  }
+  public function updateAbofromUser($user) {}
+  public function deleteAbofromUser($user) {}
 }

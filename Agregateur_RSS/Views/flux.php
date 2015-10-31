@@ -14,9 +14,18 @@ and open the template in the editor.
         <?php include("menu.php")?>
         <section>
             <?php
-                foreach($data as $key){
-                    echo '<a href ="afficher_nouvelles.ctrl.php?flux='.$key.'">'.$key."</p>";
+            echo "<table>";
+                foreach($data['abo'] as $key){
+                    echo '<tr><td><a href ="afficher_nouvelles.ctrl.php?flux='.$key['url'].'">'.$key['url']."</a></td>";
+                    echo '<td><input type="submit" value="Se désabonner" name="action"/></td></tr>';
                 }
+            echo "</table>";
+            echo "<table>";
+                foreach($data['rss'] as $key){
+                    echo '<tr><td><a href ="afficher_nouvelles.ctrl.php?flux='.$key['url'].'">'.$key['url']."</a></td>";
+                    echo '<td><input type="submit" value="S\'abonner" name="action"/></td></tr>';
+                }
+            echo "</table>";
             ?>
         </section>
     </body>

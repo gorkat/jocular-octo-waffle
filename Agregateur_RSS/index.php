@@ -8,4 +8,4 @@
 
 /* Point de démarrage de l'appplication AgregateurRSS */
 
-header('Location: ./Views/Acceuil.php');
+header('Location: ./Controler/logging.ctrl.php');

@@ -18,6 +18,10 @@ and open the template in the editor.
                 <p>Nom d'utilisateur :
                 <input type="text" name="login"/>
                 </p>
+                <p>
+                    Votre email :
+                    <input type="email" name="mail" />
+                </p>
                 <p>Mot de passe :
                     <input type="password" name="password1" />
                 </p>

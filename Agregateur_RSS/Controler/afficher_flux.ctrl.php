@@ -11,14 +11,12 @@
     require_once('../Model/DAO.class.php');
     
     $dao = new DAO;
-    
-    $tab = $dao->readAllRSS(); // on récupère tous les flux de la base
-    
-    
-    $i = 0;
-    foreach($tab as $key){
-        $data[$i] = $key->url();
-        $i++;
+    session_start();
+    $abo = $dao->readAbofromUser($_SESSION['username']);
+    foreach ($abo as $key){
+        var_dump($key);
     }
-    
+    $data['abo'] = 1; // on récupère tous les flux de la base
+    $data['rss'] = $dao->readAllRSS();
+    session_write_close();
     include("../Views/flux.php");

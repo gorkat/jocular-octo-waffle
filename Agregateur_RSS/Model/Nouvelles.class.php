@@ -19,7 +19,7 @@ class Nouvelles {
     private $id;
     private $image;
 
-    public function lien() { return $this->url;}
+    public function url() { return $this->url;}
     public function titre() { return $this->titre;}
     public function description() { return $this->description;}
     public function date() { return $this->date;}
@@ -31,7 +31,7 @@ class Nouvelles {
 
             //màj lien vers article
             $nodeList = $item->getElementsByTagName('link');
-            $this->lien = $nodeList->item(0)->textContent;
+            $this->url = $nodeList->item(0)->textContent;
 
             //màj titre
             $nodeList = $item->getElementsByTagName('title');
@@ -52,8 +52,11 @@ class Nouvelles {
             //Téléchargement de l'image et màj
             $nodeList = $item->getElementsByTagName('enclosure');
             $node = $nodeList->item(0);
-
-            $this->downloadImage($node, $this->titre);
+            if($node != null) {
+                $this->downloadImage($node, $this->titre);
+            } else {
+                $this->image = null;
+            }
 
     }
 
@@ -65,7 +68,7 @@ class Nouvelles {
             // L'attribut url a été trouvé : on récupère sa valeur, c'est l'URL de l'image
             $url = $node->nodeValue;
             // On construit un nom local pour cette image : on suppose que $nomLocalImage contient un identifiant unique
-            $this->image = './Data/'.$imageId.'.jpg';
+            $this->image = '../Data/'.$imageId.'.jpg';
             // On télécharge l'image à l'aide de son URL, et on la copie localement.
             file_put_contents($this->image, file_get_contents($url));
             }

@@ -25,7 +25,11 @@ if(isset($_SESSION['username'])){
             $data['user'] = $log;
             $_SESSION['username'] = $log;
             session_write_close();
-            include('../Views/Acceuil_user_logged.php');
+            if($log == "admin") {
+                include('../Views/back_office.view.php');
+            } else {
+                include('../Views/Acceuil_user_logged.php');
+            }
         } else {
             include('../Views/Acceuil.php');
             echo "<p>Login ou Mdp incorrect, veuillez vous inscrire ou recommencer !</p>";
