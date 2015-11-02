@@ -14,21 +14,28 @@ and open the template in the editor.
                 
         <?php include("menu_login.php"); //Inclusion d'un morceau de page contenant le menu pour une plus grande facilité de modification de celui ci.?> 
         <section>
-        <form action="../Controler/inscription.ctrl.php">
-                <p>Nom d'utilisateur :
-                <input type="text" name="login"/>
-                </p>
-                <p>
-                    Votre email :
-                    <input type="email" name="mail" />
-                </p>
-                <p>Mot de passe :
-                    <input type="password" name="password1" />
-                </p>
-                <p>Confirmez le mot de passe :
-                    <input type="password" name="password2" />
-                </p>
-                <input type="submit" value="S'inscrire">
+            <table class="log">
+                <form action="../Controler/inscription.ctrl.php">
+                    <tr><td>Nom d'utilisateur :</td>
+                            <td><input type="text" name="login"/>
+                    </td></tr>
+
+                    <tr><td>Votre email :</td>
+                            <td><input type="email" name="mail" />
+                    </td></tr>
+                
+                    <tr><td>Mot de passe :</td>
+                            <td><input type="password" name="password1" />
+                    </td></tr>
+                    
+                    <tr><td>Confirmez le mot de passe :</td>
+                            <td><input type="password" name="password2" />
+                    </td></tr>
+                
+                    <tr><td></td>
+                        <td><input type="submit" value="S'inscrire">
+                    </td></tr>
+            </table>
         </section>
     </body>
 </html>

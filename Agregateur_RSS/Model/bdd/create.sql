@@ -17,7 +17,8 @@
 
       CREATE TABLE utilisateur (
         login varchar(80) primary key,
-        mp varchar(8)
+        mp varchar(8),
+        mail varchar(128)
       );
 
       CREATE TABLE abonnement (

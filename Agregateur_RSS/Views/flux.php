@@ -12,20 +12,31 @@ and open the template in the editor.
     </head>
     <body>
         <?php include("menu.php")?>
-        <section>
+            <nav id="categories">
             <?php
-            echo "<table>";
                 foreach($data['abo'] as $key){
-                    echo '<tr><td><a href ="afficher_nouvelles.ctrl.php?flux='.$key['url'].'">'.$key['url']."</a></td>";
-                    echo '<td><input type="submit" value="Se désabonner" name="action"/></td></tr>';
+                    echo '<form action="../Controler/afficher_flux.ctrl.php">';
+                    echo '<input type="hidden" value="'.$key['url'].'" name="flux">';
+                    echo '<input type="submit" value="'.$key['categorie'].'" name="cat"/>';
+                    echo "</form>";
                 }
-            echo "</table>";
+            echo "</nav>";
+            echo "<section>";
+            if(isset($data['img'])){
+                foreach ($data['img'] as $key){
+                    echo '<a href="../Controler/afficher_nouvelle.ctrl.php?id='.$key['id'].'"><img src="'.$key['image'].'"/></a>';
+                }
+            }
             echo "<table>";
-                foreach($data['rss'] as $key){
-                    echo '<tr><td><a href ="afficher_nouvelles.ctrl.php?flux='.$key['url'].'">'.$key['url']."</a></td>";
-                    echo '<td><input type="submit" value="S\'abonner" name="action"/></td></tr>';
+                foreach($data['rssNotFollowed'] as $key){
+                    echo '<form action="../Controler/user_actions.ctrl.php">';
+                    echo '<tr><td>'.$key['titre'].'</td>';
+                    echo '<input type="hidden" value="'.$key['url'].'" name="newAbo">';
+                    echo '<td><input type="submit" value="S\'abonner"/></td></tr>';
+                    echo "</form>";
                 }
             echo "</table>";
+            
             ?>
         </section>
     </body>

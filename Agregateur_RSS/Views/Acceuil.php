@@ -15,16 +15,19 @@ and open the template in the editor.
         <section>
             <p>Vous êtes sur la page d'Acceuil de l'agregateur RSS de Nous ;) </p>
             <p>Veuillez vous logger pour consulter vos flux, ou le cas échéant vous inscrire ;)</p>
-            
-            <form action="../Controler/logging.ctrl.php">
-                <p>Nom d'utilisateur :
-                    <input type="text" name="login"/>
-                </p>
-                <p>Mot de Passe :
-                    <input type="password" name="password"/>
-                </p>
-                    <input type="submit" value="Se connecter">
-  </form>
+                <table class="log">
+                    <form action="../Controler/logging.ctrl.php">
+                        <tr><td>Nom d'utilisateur :
+                            <td><input type="text" name="login"/></td>
+                        </td></tr>
+                        <tr><td>Mot de Passe :
+                            <td><input type="password" name="password"/></td>
+                        </td></tr>
+                        <tr><td></td>
+                            <td><input type="submit" value="Se connecter"></td>
+                        </td></tr>
+                    </form>
+                </table>
         </section>
     </body>
 </html>

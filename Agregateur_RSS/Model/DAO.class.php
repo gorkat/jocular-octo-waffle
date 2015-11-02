@@ -91,7 +91,7 @@ public function readRSSfromID($id) {
   }
 
   public function readAllRSS() {
-      $q = ("Select url from RSS");
+      $q = ("Select url, titre from RSS");
       $sql = $this->db->query($q);
       $tab = $sql->fetchAll(PDO::FETCH_ASSOC);
       
@@ -123,6 +123,14 @@ public function readRSSfromID($id) {
     }
   }
 
+  public function readNouvellefromID($nvl_id){
+      $id = $this->db->quote($nvl_id);
+      $sql = $this->db->query("SELECT * FROM Nouvelles WHERE id=$id");
+      $tab = $sql->fetchAll(PDO::FETCH_CLASS, "Nouvelles");
+      
+      return $tab[0];
+  }
+  
   // Crée une nouvelle dans la base à partir d'un objet nouvelle
   // et de l'id du flux auquelle elle appartient
   public function createNouvelle(Nouvelles $n, $RSS_id) {
@@ -163,6 +171,13 @@ public function readRSSfromID($id) {
     }
   }
 
+  public function readImgFromRSS($rss_id) {
+      $id = $this->db->quote($rss_id);
+      $sql = $this->db->query("SELECT image, id FROM Nouvelles WHERE RSS_id=$id");
+      $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+      return $res;
+  }
+  
   //////////////////////////////////////////////////////////
   // Methodes CRUD sur Utilisateurs
   //////////////////////////////////////////////////////////
@@ -266,13 +281,13 @@ public function readRSSfromID($id) {
   public function readAbofromUser($user) {
       $login = $this->db->quote($user);
       
-      $sql = $this->db->query("SELECT * FROM abonnement WHERE utilisateur_login=$login");
+      $sql = $this->db->query("SELECT r.url, a.categorie FROM RSS r, abonnement a WHERE a.utilisateur_login=$login AND a.RSS_id = r.id");
       $res = $sql->fetchAll(PDO::FETCH_ASSOC);
       
       return $res;
   }
   
-  public function readAbofromUserANDrss($user,$rss){
+  public function readAbofromUserANDrss($user,$RSS_id){
       $login = $this->db->quote($user);
       $rss = $this->db->quote($RSS_id);
       $sql = $this->db->query("SELECT * FROM abonnement WHERE utilisateur_login=$login and RSS_id=$rss");
@@ -304,4 +319,13 @@ public function readRSSfromID($id) {
   }
   public function updateAbofromUser($user) {}
   public function deleteAbofromUser($user) {}
+  
+  public function retrieveRSSnotFollowedByUser($user){
+      $login = $this->db->quote($user);
+      $sql = $this->db->query("SELECT url, titre from RSS except SELECT r.url, r.titre FROM RSS r, abonnement a WHERE a.utilisateur_login=$login AND a.RSS_id = r.id");
+      
+      $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+      
+      return $res;
+  }
 }

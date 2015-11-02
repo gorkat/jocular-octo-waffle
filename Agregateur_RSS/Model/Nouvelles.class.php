@@ -55,7 +55,7 @@ class Nouvelles {
             if($node != null) {
                 $this->downloadImage($node, $this->titre);
             } else {
-                $this->image = null;
+                $this->image = "../Views/Styles/Contents/default.jpeg";
             }
 
     }
