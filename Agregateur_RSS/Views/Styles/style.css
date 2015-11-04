@@ -149,3 +149,43 @@ footer form:last-child {
     width : 400px;
     margin : auto;
 }
+
+/*----------------------- tableaux -------------------------------------------*/
+
+#usersTab {
+    width : 1000px;
+    border : 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+#usersTab td, th {
+    border : 1px solid black;
+    padding : 5px 8px;
+}
+
+#usersTab th {
+    background-color: darkgray;
+}
+
+#usersTab td {
+    background-color: window;
+}
+
+#usersTab input {
+    border : 1px solid black;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.textInput {
+    width : 120px;
+}
+
+#usersTab input:first-child {
+    margin-right: 5px;
+}
+
+#usersTab td:last-child input:last-child {
+    margin-right: 5px;
+}

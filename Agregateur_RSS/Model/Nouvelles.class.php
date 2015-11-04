@@ -53,7 +53,10 @@ class Nouvelles {
             $nodeList = $item->getElementsByTagName('enclosure');
             $node = $nodeList->item(0);
             if($node != null) {
-                $this->downloadImage($node, $this->titre);
+                $tab1 = explode(' ',$this->titre());    // On découpe le titre pour enlever les espaces
+                $titre = implode($tab1);                // On rassemble chaque mot ensemble pour former le nom de l'image
+                $titre = str_replace('?','',$titre);    // On retire les caractères '?' pouvant donner des erreurs lors du chargement de l'image
+                $this->downloadImage($node, $titre);
             } else {
                 $this->image = "../Views/Styles/Contents/default.jpeg";
             }

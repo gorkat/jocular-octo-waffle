@@ -17,16 +17,16 @@
     $rss->update();
     $dao->updateRSS($rss);
     
-    foreach ($rss->nouvelles() as $key) {
+    foreach ($rss->nouvelles() as $key) {   // On cherche à insérer les nouvelles "fraîches" dans la bdd
             $nvl = new Nouvelles;
             $nvl->update($key);
-            $o = $dao->readNouvellefromTitre($nvl->titre(), $rss->id());
+            $o = $dao->readNouvellefromTitre($nvl->titre(), $rss->id());    // On regarde si la nouvelle est déjà dans la base
 
-            if ($o == NULL) {
-                    $o = $dao->createNouvelle($nvl, $rss->id());
-            } else {
+            if ($o == NULL) {                                               // Si elle n'y figure pas,
+                    $o = $dao->createNouvelle($nvl, $rss->id());            // On l'y ajoute
+                    $dao->updateImageNouvelle($o);                          // On télécharge son image
             }
-            $dao->updateImageNouvelle($nvl);
+            
     }    
     
     $nvls = $dao->returnNouvellesFromRSS($rss->id());
@@ -34,6 +34,7 @@
     include("../Views/nouvelles.php");
     
     foreach($nvls as $key) {
+        echo "<h1></h1>";
         echo "<article>";
             echo "<h1>".$key->titre()."<h1>";
                     echo '<img src="'.$key->image().'">';

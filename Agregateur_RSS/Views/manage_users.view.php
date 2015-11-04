@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -10,15 +11,14 @@
             include("menu_back_office.view.php");
             
             
-            echo "<table><tr><th>Login</th><th>Mot de passe</th><th>Adresse mail</th></tr>";
+            echo '<table id="usersTab"><tr><th>Login</th><th>Mot de passe</th><th>Adresse mail</th><th>Actions</th></tr>';
             
-//            print_r($data['users']); //[0] => Array ( [login] => admin [mp] => admin )
             foreach($data['users'] as $key => $value) {
                 echo '<form action="../Controler/back_office.ctrl.php">';
                 echo '<tr><th>'.$value['login'].'</th><td>'.$value['mp'].'</td><td>'.$value['mail'].
                         '</td><td><input type="hidden" name="user" value="'.$value['login'].'"/>'
-                        . '<input type="text" name="newMP"/><input type="submit" value="Changer mot de passe" name="action"/></td>'
-                        . '<td><input type="submit" value="Supprimer" name="action"/></td></tr>';
+                        . '<input type="text" class="textInput" name="newMP"/><input type="submit" value="Changer mot de passe" name="action"/>'
+                        . '<input type="submit" value="Supprimer" name="action"/></td></tr>';
                 echo '</form>';
                 
             }

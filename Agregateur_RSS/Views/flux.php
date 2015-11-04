@@ -20,6 +20,8 @@ and open the template in the editor.
                     echo '<input type="submit" value="'.$key['categorie'].'" name="cat"/>';
                     echo "</form>";
                 }
+                echo '<form action="../Controler/afficher_flux.ctrl.php">';
+                echo '<input type="submit" value="Rafraichir" name="maj"/>';
             echo "</nav>";
             echo "<section>";
             if(isset($data['img'])){

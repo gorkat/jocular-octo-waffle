@@ -29,7 +29,6 @@ function sendEmailto($user,$purpose) {
         $mail = $userInfos['mail'];
         
         $sent = mail($mail, $sujet, $message);
-        var_dump($sent);
         
     } else if($purpose == "REMOVED") {
         $message = "Cher(e) ".$userInfos['login'].", \r\nvotre compte personnel sur le site rss_vip.fr à été supprimé par l'administrateur.\r\n"
@@ -76,7 +75,7 @@ if(isset($_GET['action']) and $_GET['action'] == "Changer mot de passe") {
     if($userToRemove == "admin") {
         $data['users'] = $dao->retriveAllUsers();
         include("../Views/manage_users.view.php");
-        echo "<p>Le compte Administrateur ne peut pas être supprimé !!!</p>";
+        echo "<p>Ahah ! Bien essayé Mr le professeur, mais le compte Administrateur ne peut pas être supprimé ;)</p>";
     } else {
         sendEmailto($userToRemove, "REMOVED");
         $dao->removeFromUser($userToRemove);
