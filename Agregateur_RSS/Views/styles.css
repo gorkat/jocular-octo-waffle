@@ -1,0 +1,151 @@
+body { margin: 0;  font-family: helvetica, "Montserrat" ,Times, Arial,helvetica, serif;  font-size: 18px; line-height: 20px; color: #000;  background-color: #ffffff; background-repeat:no-repeat; height: 100%; width: 100%; }
+html{  }
+
+p{ font-size:17px; }
+a{ color:#000; text-decoration:none; }
+
+/* Fixe la taille de la page en largeur et permet de centrer le bloc */
+#page{ width:1024px; background-color:#fff; margin-left:auto; margin-right:auto; }
+
+/* Le menu */
+#menu{ position:relative; }
+
+/* La balise nav est indentifié comme permettant la navigation dans le site */
+nav { transition-duration: 2s; left: 0; list-style: none outside none; height:62px; letter-spacing: 1px; bottom:0px; margin-left:166px; width:500px; } /* Balise pour la navigation */
+nav ul{ margin-left:200px; list-style-type: none; margin:0px; padding:0px; height:62px; } 
+nav li { height:62px; font-size:13px; display:inline-block; line-height: 62px; /*width:76px;*/ margin-right:20px; text-transform : uppercase; text-align:center; }
+nav li.grandeTitre{ /* width:120px; */ }
+nav li.active{  border-style: solid; border-style: solid; border-width:0px; border-bottom: 6px solid #54577c; height:54px;  line-height: 54px; } /* class active dans un li */
+.conteneur{ width:700px; }
+
+/* La recherche */
+#recherche{ position:absolute; left:800px; top:18px; background-image:url("img/ui/search.png"); }
+#recherche input{ border:0px; background-image: url("img/ui/search.png"); width:93px; height:21px; padding-left:30px;}
+
+/* Le petit plus de droite*/
+#Plus{ position:absolute; background-image:url("img/ui/plus.png"); left:984px; top:15px; height:27px; width:27px; }
+
+/* La bannière*/
+#banniere{ background-image:url(img/banniere.png); height:145px; width:1024px; }
+
+/* Le profil de gauche*/
+#profils{ width:1024px; float:left; width:153px; border-right: 3px solid #f8f8f8; height:100%; min-height:700px; display:block; } /* partie à gauche */
+#profils input { display : inline-block; }
+#profils h3 {color : #797979; position : relative; bottom : 4px; border-bottom: 1px solid #aaaaaa; padding-bottom: 4px;}
+#films .blockFilmsLigneBas:after { content: ""; display: table; clear: both; } /* ça c'est pour adapter un bloc qui contient des float:left; TRES UTILE et c'est gratuit, cadeau */
+
+/* bloc des films */
+#films{ width:868px; float:left; height:235px; } /* partie à droite */
+#films .blockFilmsLigneBas{ width:100%; border-bottom: 3px solid #f8f8f8; position:relative; }
+#films .blockFilmsLigneBas .rafraichir{ position:absolute; top:35px; left:737px; height:29px; width:93px; }
+#films .blockFilmsLigneBas:after { content: ""; display: table; clear: both; } /* ça c'est pour adapter un bloc qui contient des float:left; TRES UTILE et c'est gratuit, cadeau */
+#films .blockFilmsLigneBas.dernier{  border-bottom: 0px solid #f8f8f8; }
+#films .blockFilm{width:134px; float : left ; margin-left:35px; margin-top:40px; margin-bottom:35px; } /* Un carré avec l'image et les textes */
+#films .blockFilm  p{ margin:0px; font-size:15px; }
+#films .blockFilm .image {width:134px; height:135px; }
+#films .blockFilm .image img {width:134px; height:135px; }
+#films .blockFilm .titre{ margin-top : 10px;width:134px; height:60px; line-height: 15px; color:#797979; font-weight:bold; }
+#films .blockFilm .date{ margin-top: 50px; color:#aaaaaa; height:20px; line-height:20px;  }
+#films .blockFilmsLigneBas:first-child {height : 300px;}
+
+/*------------ Mise en forme des articles ------------------------------------*/
+
+#nouvelle p {
+    padding : 5px;
+}
+
+#nouvelle #url {
+    text-decoration: none;
+    color : #aaaaaa;
+}
+
+#nouvelle #titreNvl {
+    line-height: 35px;
+    margin-bottom: 30px;
+}
+
+#nouvelle a:visited {
+    color : blue;
+}
+
+#nouvelle #imgNvl {
+    width : 60%; height : 60%;
+    display : inline-block;
+    margin-left : 65px;
+    
+}
+
+footer form:first-child {
+    position : absolute;
+    top : 450px;
+    left : 150px;
+}
+
+footer form:last-child {
+    position : absolute;
+    top : 450px;
+    right : 150px;    
+}
+
+#nouvelle{
+    background-color: white;
+    padding : 5%;
+    position : relative;
+    left : 30px;
+}
+
+#nouvelle #descNvl {
+    clear : none;
+    font-family: sans-serif;
+    font-size: medium;
+}
+
+#nouvelle a {
+    clear : right;
+    font-size: small;
+}
+
+/*----------------------------------------------------------------------------*/
+.abo {
+    width : 1000px;
+    border : 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    margin-top : 10px;
+    margin-bottom: 20px;
+}
+
+.abo tr td:last-child, .abo th:last-child {
+    width : 150px;
+}
+
+.abo tr td:first-child, .abo th:first-child{
+    width : 500px;
+}
+
+.abo td, .abo th {
+    border : 1px solid black;
+    padding : 5px 8px;    
+}
+
+.abo th {
+    background-color: darkgray;
+}
+
+.abo td {
+    background-color: window;
+}
+
+.abo input {
+    border : 1px solid black;
+    border-radius: 5px;
+    text-align: left;
+}
+
+/*----------------------------*/
+
+#maj {
+    border-top : 1px solid #aaaaaa;
+    padding-top : 30px;
+    margin-top : 30px;
+}

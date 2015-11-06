@@ -32,11 +32,6 @@ foreach($urls as $key){
         } else {
             echo "rss est déjà connu par la bdd  |  ";
         }
-        
-        
-        
-        
-        
         // Mise à jour du flux
         $rss->update();
         $dao->updateRSS($rss);

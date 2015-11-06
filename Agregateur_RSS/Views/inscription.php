@@ -25,11 +25,11 @@ and open the template in the editor.
                     </td></tr>
                 
                     <tr><td>Mot de passe :</td>
-                            <td><input type="password" name="password1" />
+                        <td><input type="password" name="password1" min="8" max="16" />
                     </td></tr>
                     
                     <tr><td>Confirmez le mot de passe :</td>
-                            <td><input type="password" name="password2" />
+                            <td><input type="password" name="password2" min="8" max="16" />
                     </td></tr>
                 
                     <tr><td></td>

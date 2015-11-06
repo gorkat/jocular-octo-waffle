@@ -14,7 +14,7 @@ and open the template in the editor.
         <?php include("menu.php")?>
         
         <section>
-            <form action="../Controler/user_actions.ctrl.php">
+            <form action="../Controler/gerer_abonnements.ctrl.php">
                 <p>Titre : <?= $data["titre"]?> <br> Url : <?=$data["url"] ?> <br> Catégorie : <?=$data['cat'] ?> </p>
                     <p>Nom de l'abonnement :
                         <input type="text" name="nom" />

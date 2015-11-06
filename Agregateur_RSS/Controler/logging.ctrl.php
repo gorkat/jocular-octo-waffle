@@ -12,7 +12,7 @@ session_start();
 
 if(isset($_SESSION['username'])){
     session_destroy();
-    include("../Views/Acceuil.php");
+    include("../Views/acceuil.view.php");
 } else {
         if(isset($_GET['login']) and isset($_GET['password'])) {
         $dao = new DAO;
@@ -21,22 +21,22 @@ if(isset($_SESSION['username'])){
         $mp = $_GET['password'];
         $userExists = $dao->readUserfromLoginAndPassWord($log,$mp);
 
-        if($userExists) {
+        if($userExists != null) {
             $data['user'] = $log;
             $_SESSION['username'] = $log;
             session_write_close();
             if($log == "admin") {
                 include('../Views/back_office.view.php');
             } else {
-                include('../Views/Acceuil_user_logged.php');
+                include('../Views/index.html');
             }
         } else {
-            include('../Views/Acceuil.php');
+            include('../Views/acceuil.view.php');
             echo "<p>Login ou Mdp incorrect, veuillez vous inscrire ou recommencer !</p>";
 
         }
     } else {
-        include('../Views/Acceuil.php');
+        include('../Views/acceuil.view.php');
             echo "<p>Veuillez remplir correctement tous les champs !!!</p>";
     }
 }

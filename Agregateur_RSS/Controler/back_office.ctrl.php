@@ -17,7 +17,7 @@ function sendEmailto($user,$purpose) {
     $dao = new DAO;
     $userInfos = $dao->readUserfromLogin($user);
     if ($purpose == "MPMODIF"){
-        $message = "Cher(e) ".$userInfos['login'].", \r\nvotre mot de passe d'accès au site rss_vip.fr à été modifié par l'administrateur et est désormais :\r\n"
+        $message = "Cher(e) ".$userInfos['login'].", \r\nvotre mot de passe d'accès au site My_rss.fr à été modifié par l'administrateur et est désormais :\r\n"
                 . $userInfos['mp']
                 . "\r\nNous vous remercions de l'Interêt que vous portez à notre site et vous souhaitons une bonne journée \r\n"
                 . "Merci de ne pas répondre à ce mail, il a été envoyé automatiquement !";
@@ -31,7 +31,7 @@ function sendEmailto($user,$purpose) {
         $sent = mail($mail, $sujet, $message);
         
     } else if($purpose == "REMOVED") {
-        $message = "Cher(e) ".$userInfos['login'].", \r\nvotre compte personnel sur le site rss_vip.fr à été supprimé par l'administrateur.\r\n"
+        $message = "Cher(e) ".$userInfos['login'].", \r\nvotre compte personnel sur le site My_rss.fr à été supprimé par l'administrateur.\r\n"
                 . "\r\nNous vous remercions de l'Interêt que vous avez porté à notre site et vous souhaitons une bonne journée \r\n"
                 . "Merci de ne pas répondre à ce mail, il a été envoyé automatiquement !";
         
@@ -56,6 +56,49 @@ if(isset($_GET['arg']) && $_GET['arg'] == "users") {
     $data['users'] = $dao->retriveAllUsers();
 
     include("../Views/manage_users.view.php");
+
+}
+if(isset($_GET['arg']) && $_GET['arg'] == "manageFlux") {
+    if(isset($_GET['flux'])) {
+        $url = $_GET['flux'];
+        $rss = $dao->readRSSfromURL($url);
+        $dao->deleteNouvellesfromRSSID($rss->id());
+        $dao->deleteRSSfromUrl($url);
+    }
+    $data['RSS'] = $dao->readAllRSS();
+    
+    include("../Views/manage_flux.view.php");
+}
+    
+if(isset($_GET['arg']) && $_GET['arg'] == "addFlux") {
+    
+    if(isset($_GET['flux'])) {
+        $url = $_GET['flux'];
+        $rss = $dao->readRSSfromURL($url);
+
+        if ($rss == NULL) {
+          echo $url." n'est pas connu\n";
+          echo "On l'ajoute ... \n";
+          $rss = $dao->createRSS($url);
+        } else {
+            echo "rss est déjà connu par la bdd  |  ";
+        }
+        // Mise à jour du flux
+        $rss->update();
+        $dao->updateRSS($rss);
+        foreach ($rss->nouvelles() as $key) {
+                $nvl = new Nouvelles;
+                $nvl->update($key);
+                $o = $dao->readNouvellefromTitre($nvl->titre(), $rss->id());
+                
+                if ($o == NULL) {
+                    $o = $dao->createNouvelle($nvl, $rss->id());
+                }
+                $dao->updateImageNouvelle($nvl);
+        }
+    }
+    
+    include("../Views/ajouter_flux.view.php");
 
 }
 

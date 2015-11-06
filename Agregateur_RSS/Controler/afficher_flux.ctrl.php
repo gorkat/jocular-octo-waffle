@@ -20,6 +20,7 @@
         $currentRss = $dao->readRSSfromURL($url);
         $id = $currentRss->id();
         $_SESSION['currentRSS'] = $_GET['flux'];
+        $_SESSION['currentRSS_id'] = $id;
         $data['img'] = $dao->readImgFromRSS($id);
     }
     
@@ -56,5 +57,5 @@
     }
     
     session_write_close();
-    include("../Views/flux.php");
+    include("../Views/flux.view.php");
     

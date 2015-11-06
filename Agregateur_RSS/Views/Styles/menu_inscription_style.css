@@ -1,0 +1,73 @@
+/*---------- Menu login ---------------------------------*/
+body {
+  font-family: "helvetica";
+}
+
+
+#window {
+    padding : 0px;
+    width : 300px; height : 250px;
+    background-color: white;
+    position : relative;
+    font-size : small;
+    margin-left: 450px;
+    margin-top: 150px;
+    border-right: 1px solid #aaaaaa;
+    border-left: 1px solid #aaaaaa;
+}
+
+#window div:last-child p {
+    margin : 0px;
+    padding-left : 10px;
+    margin-top : 5px;
+}
+
+#window div:first-child p {
+    height : 20px;
+    margin : 0px;
+    padding : 10px 0px 10px 0px;
+    background-color: #aaaaaa;
+    text-align: center;
+}
+
+#window div:first-child {
+    width : 300px; height : 150px;
+    position : absolute;
+    top : 0px;
+}
+
+#window div:last-child {
+    width : 300px; height : 50px;
+    position : absolute;
+    bottom : 0px;
+    background-color: #aaaaaa;
+}
+
+#window #ok {
+    width : 75px; height : 25px;
+    position : absolute;
+    bottom : 10px;
+    right : 10px;
+    background-color: #666285;
+    color : white;
+    border : -moz-use-text-color;
+}
+
+
+#window #inputs input{
+    padding : 5px;
+    margin-bottom : 10px;
+    width : 250px;
+    border : #aaaaaa;
+    border-radius : 10px;
+    background-color: #aaaaaa;
+    position : relative;
+    width : 264px;
+    top : 50px;
+    left : 15px;
+}
+
+a {
+    color : black;
+    text-decoration: none;
+}

@@ -1,14 +1,12 @@
 <header>  
-        <h3><img src="../Views/Styles/Contents/rss_logo.jpeg">
-            Bienvenue sur vôtre site de Veille d'information personnalisée !
-
-        </h3>
-
+        <h3>WELCOME</h3>
         <nav id="menu"> 
                 <ul>
-                    <li><a href="../Controler/acceuil.ctrl.php">Acceuil</a></li><!--
-                    --><li><a href="../Controler/afficher_flux.ctrl.php">Mes Flux</a></li><!--
-                    --><li><a href="../Controler/logging.ctrl.php">Déconnexion</a></li>
+                    <li><a href="../Controler/acceuil.ctrl.php">ACCEUIL</a></li><!--
+                    --><li><a href="../Controler/afficher_flux.ctrl.php">MES FLUX</a></li><!--
+                    --><li><a href="../Controler/gerer_abonnements.ctrl.php?action=afficher">ABONNEMENTS</a></li><!--
+                    --><li><a href="../Controler/my_space.ctrl.php?action=afficher">MON COMPTE</a></li><!--
+                    --><li><a href="../Controler/logging.ctrl.php">DECONNEXION</a></li>
                 </ul>
         </nav>
 </header>

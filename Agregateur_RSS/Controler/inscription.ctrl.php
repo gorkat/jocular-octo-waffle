@@ -25,17 +25,17 @@ if(isset($_GET['login']) and isset($_GET['password1']) and isset($_GET['password
             $_SESSION['username'] = $log;
             session_write_close();
             $data['user'] = $log;
-            include('../Views/Acceuil_user_logged.php');
+            include('../Views/index.html');
             echo "<p>Bienvenue parmis nous ".$log.", vous êtes désormais inscrits sur le site :) </p>";
         } else {
-            include('../Views/inscription.php');
+            include('../Views/inscription.view.php');
             echo "<p>Désolé, ce nom d'utilisateur est déjà pris :(</p>";
         }
     } else {
-        include('../Views/inscription.php');
+        include('../Views/inscription.view.php');
         echo "<p>Les deux mots de passe ne correspondent pas :(</p>";
     }
 } else {
-    include('../Views/inscription.php');
+    include('../Views/inscription.view.php');
     echo "<p>Veuillez remplir tout les champs pour procéder à votre inscription !</p>";
 }

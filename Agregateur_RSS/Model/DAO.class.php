@@ -20,7 +20,7 @@ class DAO {
 
   // Ouverture de la base de donnée
   public function __construct() {
-    $dsn = 'sqlite:/opt/lampp/htdocs/jocular-octo-waffle/Agregateur_RSS/Model/bdd/rss.db'; // Data source name
+    $dsn = 'sqlite:/users/info/etu-s3/gorkat/public_html/jocular-octo-waffle/Agregateur_RSS/Model/bdd/rss.db'; // Data source name
     try {
       $this->db = new PDO($dsn);
     } catch (PDOException $e) {
@@ -98,6 +98,17 @@ public function readRSSfromID($id) {
       return $tab;
   }
   
+  public function deleteRSSfromUrl($url){
+      $url = $this->db->quote($url);
+      $q = "DELETE FROM RSS WHERE url=$url";
+      
+        try {
+          $this->db->exec($q) or die("\ndeleteRSS error: no RSS Deleted\n");
+        } catch (PDOException $e) {
+            die("PDO Error :".$e->getMessage());
+        }
+  }
+  
   //////////////////////////////////////////////////////////
   // Methodes CRUD sur Nouvelle
   //////////////////////////////////////////////////////////
@@ -173,11 +184,21 @@ public function readRSSfromID($id) {
 
   public function readImgFromRSS($rss_id) {
       $id = $this->db->quote($rss_id);
-      $sql = $this->db->query("SELECT image, id FROM Nouvelles WHERE RSS_id=$id");
+      $sql = $this->db->query("SELECT image, id, date, titre FROM Nouvelles WHERE RSS_id=$id");
       $res = $sql->fetchAll(PDO::FETCH_ASSOC);
       return $res;
   }
   
+  public function deleteNouvellesfromRSSID($rss_id) {
+    $this->deleteAbosfromRSSID($rss_id);
+    $id = $this->db->quote($rss_id);
+    $q = "DELETE FROM Nouvelles WHERE RSS_id=$id";
+    try {
+        $this->db->exec($q);
+    } catch (PDOException $e) {
+      die("PDO Error :".$e->getMessage());
+    }
+  }
   //////////////////////////////////////////////////////////
   // Methodes CRUD sur Utilisateurs
   //////////////////////////////////////////////////////////
@@ -189,14 +210,14 @@ public function readRSSfromID($id) {
       // Renvoie Faux sinon
       $user = $this->db->quote($login);
       $mp = $this->db->quote($password);
-      $q = ("Select login, mp FROM utilisateur WHERE login =$user and mp=$mp");
+      $q = ("Select * FROM utilisateur WHERE login =$user and mp=$mp");
       
       $sql = $this->db->query($q);
       $res = $sql->fetchAll();
       if($res == NULL) {
-          return false;
+          return null;
       } else {
-          return true;
+          return $res[0];
       }
   }
   
@@ -260,10 +281,23 @@ public function readRSSfromID($id) {
             die("PDO Error :".$e->getMessage());
         }
   }
+
+  public function updateMailfromUser($user, $mail){
+      $login = $this->db->quote($user);
+      $email = $this->db->quote($mail);
+      $q = "UPDATE utilisateur SET mail=$email WHERE login=$login";
+      
+        try {
+          $this->db->exec($q) or die("\nupdateUser error: no User updated\n");
+        } catch (PDOException $e) {
+            die("PDO Error :".$e->getMessage());
+        }
+  }  
   
   public function removeFromUser($user) {
       // A compléter par les suppressions des infos concernant l'utilisateur
       $login = $this->db->quote($user);
+      $this->deleteAbofromUser($user);
       $q = "DELETE FROM utilisateur WHERE login=$login";
       
         try {
@@ -281,7 +315,7 @@ public function readRSSfromID($id) {
   public function readAbofromUser($user) {
       $login = $this->db->quote($user);
       
-      $sql = $this->db->query("SELECT r.url, a.categorie FROM RSS r, abonnement a WHERE a.utilisateur_login=$login AND a.RSS_id = r.id");
+      $sql = $this->db->query("SELECT * FROM RSS r, abonnement a WHERE a.utilisateur_login=$login AND a.RSS_id = r.id");
       $res = $sql->fetchAll(PDO::FETCH_ASSOC);
       
       return $res;
@@ -317,8 +351,34 @@ public function readRSSfromID($id) {
         }
       }
   }
-  public function updateAbofromUser($user) {}
-  public function deleteAbofromUser($user) {}
+  
+  public function deleteAbofromUser($user) {
+      $login = $this->db->quote($user);
+      try {
+        $this->db->exec("DELETE FROM abonnement WHERE utilisateur_login=$login") or die("\nDeleteAboFromUser error: no Abonnement deleted\n");
+        } catch (PDOException $e) {
+            die("PDO Error :".$e->getMessage());
+        }      
+  }
+
+  public function deleteAbofromUserandRSS($user, $rss) {
+      $login = $this->db->quote($user);
+      $rss_id = $this->db->quote($rss);
+      try {
+        $this->db->exec("DELETE FROM abonnement WHERE utilisateur_login=$login AND RSS_id=$rss_id") or die("\nDeleteAboFromUser error: no Abonnement deleted\n");
+        } catch (PDOException $e) {
+            die("PDO Error :".$e->getMessage());
+        }      
+  }
+  
+  public function deleteAbosfromRSSID($rss_id) {
+      $id = $this->db->quote($rss_id);
+      try {
+        $this->db->exec("DELETE FROM abonnement WHERE RSS_id=$id");
+        } catch (PDOException $e) {
+            die("PDO Error :".$e->getMessage());
+        }  
+  }
   
   public function retrieveRSSnotFollowedByUser($user){
       $login = $this->db->quote($user);
@@ -327,5 +387,14 @@ public function readRSSfromID($id) {
       $res = $sql->fetchAll(PDO::FETCH_ASSOC);
       
       return $res;
+  }
+  
+  public function findMinMaxNouvellesFromRSS($rss_id){
+      $rss = $this->db->quote($rss_id);
+      $sql = $this->db->query("select min(n.id), max(n.id) from abonnement a, Nouvelles n WHERE a.RSS_id=$rss and n.RSS_id=a.RSS_id");
+      
+      $res = $sql->fetchAll(PDO::FETCH_ASSOC);
+      
+      return $res[0];
   }
 }

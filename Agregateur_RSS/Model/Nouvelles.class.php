@@ -55,7 +55,14 @@ class Nouvelles {
             if($node != null) {
                 $tab1 = explode(' ',$this->titre());    // On découpe le titre pour enlever les espaces
                 $titre = implode($tab1);                // On rassemble chaque mot ensemble pour former le nom de l'image
-                $titre = str_replace('?','',$titre);    // On retire les caractères '?' pouvant donner des erreurs lors du chargement de l'image
+                $titre = str_replace('?','',$titre);    // On retire les caractères pouvant donner des erreurs lors du chargement de l'image
+                $titre = str_replace(':','',$titre);
+                $titre = str_replace('"','',$titre);
+                $titre = str_replace('%','',$titre);
+                $titre = str_replace(';','',$titre);
+                $titre = str_replace('.','',$titre);
+                $titre = str_replace('/','',$titre);
+                $titre = rtrim($titre);
                 $this->downloadImage($node, $titre);
             } else {
                 $this->image = "../Views/Styles/Contents/default.jpeg";
