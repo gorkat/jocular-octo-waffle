@@ -17,8 +17,8 @@ and open the template in the editor.
             </div>
             <div id="inputs">
                 <form action="../Controler/logging.ctrl.php"/>
-                    <input type="text" value="username" name="login"/>
-                    <input type="text" value="password" name="password"/>
+                    <input type="text" value="username" name="login" onfocus="this.value='';"/>
+                    <input type="text" value="password" name="password" onfocus="this.value='';this.type='password';"/>
                 
             </div>
             <div>

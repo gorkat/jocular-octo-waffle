@@ -17,10 +17,10 @@ and open the template in the editor.
             </div>
             <div id="inputs">
                 <form action="../Controler/inscription.ctrl.php"/>
-                    <input type="text" value="username" name="login"/>
-                    <input type="mail" value="mail" name="mail" />
-                    <input type="password" value="password1" name="password1"/>
-                    <input type="password" value="password2" name="password2"/>
+                    <input type="text" value="username" name="login" onfocus="this.value='';"/>
+                    <input type="mail" value="mail" name="mail"  onfocus="this.value='';"/>
+                    <input type="password" value="password1" name="password1" onfocus="this.value='';this.type='password1';"/>
+                    <input type="password" value="password2" name="password2" onfocus="this.value='';this.type='password2';"/>
             </div>
             <div>
                  
