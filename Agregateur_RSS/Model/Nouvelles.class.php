@@ -62,6 +62,9 @@ class Nouvelles {
                 $titre = str_replace(';','',$titre);
                 $titre = str_replace('.','',$titre);
                 $titre = str_replace('/','',$titre);
+                $titre = str_replace('-','',$titre);
+                $titre = str_replace("'",'',$titre);
+                $titre = str_replace(',','',$titre);
                 $titre = rtrim($titre);
                 $this->downloadImage($node, $titre);
             } else {

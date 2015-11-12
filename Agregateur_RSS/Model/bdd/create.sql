@@ -7,11 +7,11 @@
 
       CREATE TABLE Nouvelles (
         id integer primary key autoincrement,
-        date datetime,
+        date varchar(80),
         titre varchar(255),
         description varchar(1024),
         url varchar(255),
-        image varchar(80),
+        image varchar(128),
         RSS_id integer
       );
 
